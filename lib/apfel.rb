@@ -29,8 +29,22 @@ module Apfel
      Reader.read(file)
     end
 
+    class ParsedFile
+      attr_accessor :kv_pairs
+
+      def initialize
+        @kv_pairs = []
+      end
+
+      def comments
+        kv_pairs.map do |pair|
+         pair.comment.gsub("\n"," ")
+        end
+      end
+    end
+
     def parse_file
-      parsed_content = []
+      parsed_file = ParsedFile.new
       state = KEY
       current_comment = nil
       comments_for_keys = {}
@@ -63,12 +77,12 @@ module Apfel
         end
 
         unless current_line.is_comment?
-          parsed_content.push KVPair.new(current_line, comments_for_keys[current_line.key])
+          parsed_file.kv_pairs << KVPair.new(current_line, comments_for_keys[current_line.key])
         end
       end
 
       raise "Invalid .string file: Unterminated comment" unless state == KEY
-      parsed_content
+      parsed_file
     end
 
 
