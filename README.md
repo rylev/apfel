@@ -2,11 +2,10 @@
 
 ## Introduction
 
-Apfel is simple parser for .strings (DotStrings) files written in Ruby. DotStrings files are used by Apple platforms for localization. Apfel reads DotStrings files, parses them for key-value pairs and comments, and then converts the dot strings file to a hash.
+Apfel is simple parser for .strings (DotStrings) files written in Ruby. DotStrings files are used by Apple platforms for localization. Apfel reads DotStrings files, parses them for key-value pairs and comments.
 
 Once in the form of a hash, the content of the DotStrings file can easily be
-rebuilt as JSON (using the built in Hash.to_json method), XML and RESX
-(with the help of Builder https://github.com/jimweirich/builder) and more!
+rebuilt as JSON, XML and RESX (with the help of Builder https://github.com/jimweirich/builder) and more!
 
 ## Use
 
