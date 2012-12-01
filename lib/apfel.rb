@@ -1,6 +1,4 @@
 # encoding: UTF-8
-apfel_folder = File.join(File.dirname(__FILE__), 'apfel')
-$:.unshift apfel_folder
 
 module Apfel
 require 'apfel/reader'
