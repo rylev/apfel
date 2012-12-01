@@ -2,6 +2,17 @@
 # encoding: UTF-8
 module Apfel
 
+  module DotStrings
+    def self.parse(file)
+      file = read_file(file)
+      DotStringsParser.new(file).parse_file
+    end
+
+    def self.read_file(file)
+     Reader.read(file)
+    end
+  end
+
   class Reader
     # Reads in a file and returns an array consisting of each line of input
     def self.read(file)
@@ -16,40 +27,54 @@ module Apfel
     end
   end
 
-  class DotStrings
-    attr_reader :file_content
+  class ParsedDotStrings
+    attr_accessor :kv_pairs
+
+    def initialize
+      @kv_pairs = []
+    end
+
+    def keys
+      kv_pairs.map do |pair|
+        pair.key
+      end
+    end
+
+    def values
+      kv_pairs.map do |pair|
+        pair.value
+      end
+    end
+
+    def comments
+      kv_pairs.map do |pair|
+       pair.comment.gsub("\n"," ")
+      end
+    end
+
+    def to_hash
+      hash = {}
+      kv_pairs.each do |pair|
+        hash[pair.key] = { pair.value => pair.comment }
+      end
+      hash
+    end
+  end
+
+  class DotStringsParser
     KEY = "KEY"
     COMMENT = "COMMENT"
 
-    def initialize(file)
-     @file_content = read_file(file)
-    end
-
-    def read_file(file)
-     Reader.read(file)
-    end
-
-    class ParsedFile
-      attr_accessor :kv_pairs
-
-      def initialize
-        @kv_pairs = []
-      end
-
-      def comments
-        kv_pairs.map do |pair|
-         pair.comment.gsub("\n"," ")
-        end
-      end
+    def initialize(read_file, parsed_file = ParsedDotStrings.new)
+      @read_file = read_file
+      @parsed_file = parsed_file
     end
 
     def parse_file
-      parsed_file = ParsedFile.new
       state = KEY
       current_comment = nil
       comments_for_keys = {}
-      file_content.each do |content_line|
-
+      @read_file.each do |content_line|
         current_line = Line.new(content_line)
         next if current_line.empty_line?
 
@@ -77,7 +102,7 @@ module Apfel
         end
 
         unless current_line.is_comment?
-          parsed_file.kv_pairs << KVPair.new(current_line, comments_for_keys[current_line.key])
+          @parsed_file.kv_pairs << KVPair.new(current_line, comments_for_keys[current_line.key])
         end
       end
 
@@ -86,13 +111,6 @@ module Apfel
     end
 
 
-    def to_hash
-      hash = {}
-      parse_file.each do |pair|
-        hash[pair.key] = { pair.value => pair.comment }
-      end
-      hash
-    end
   end
 
   class Line

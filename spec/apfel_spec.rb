@@ -42,21 +42,13 @@ multiline comment */
         end
 
         let(:parsed_file) do
-          DotStrings.new(valid_file).parse_file
+          DotStrings.parse_file(valid_file)
         end
 
-        it 'returns an array of KVPair objects' do
-          parsed_file.should respond_to(:kv_pairs)
-          parsed_file.kv_pairs.count.should eq(3)
+        it 'returns a ParsedDotStrings object' do
+          parsed_file.should be_a(ParsedDotStrings)
         end
 
-        it 'returns the right comments' do
-          parsed_file.comments.should eq(
-            ["This is the first comment",
-             "This is a multiline comment",
-             "This is comment number 3"]
-          )
-        end
       end
 
       context 'when given an invalid strings file' do
@@ -72,7 +64,7 @@ multiline comment */
 
           it 'returns an error' do
             expect {
-              DotStrings.new(invalid_file_semicolon)
+              DotStrings.parse_file(invalid_file_semicolon)
             }.to raise_error
           end
         end
@@ -93,11 +85,22 @@ multiline comment */
 
           it 'raises an error' do
             expect {
-              DotStrings.new(invalid_file_semicolon)
+              DotStrings.parse_file(invalid_file_semicolon)
             }.to raise_error
           end
         end
       end
     end
+  end
+
+  describe ParsedDotStrings do
+
+        it 'returns the right comments' do
+          parsed_file.comments.should eq(
+            ["This is the first comment",
+             "This is a multiline comment",
+             "This is comment number 3"]
+          )
+        end
   end
 end
