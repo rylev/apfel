@@ -1,7 +1,10 @@
 # encoding: UTF-8
+apfel_folder = File.join(File.dirname(__FILE__), 'apfel')
+$:.unshift apfel_folder
+
 module Apfel
-require 'reader'
-require 'dot_strings_parser'
+require 'apfel/reader'
+require 'apfel/dot_strings_parser'
   # Public module for parsing DotStrings files and returning a parsed dot
   # strings object
   def self.parse(file)

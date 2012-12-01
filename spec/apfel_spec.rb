@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'apfel'
-require 'parsed_dot_strings'
+require 'apfel/parsed_dot_strings'
 
 describe Apfel do
   describe '::parse_file' do
