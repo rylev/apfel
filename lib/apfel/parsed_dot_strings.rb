@@ -34,16 +34,16 @@ module Apfel
     end
 
     def to_hash(args={})
-      no_comments = args[:no_comments].nil? ? false : args[:no_comments]
+      with_comments = args[:with_comments].nil? ? true : args[:with_comments]
 
       build_hash { |hash, pair|
-      hash_value = no_comments ? pair.value : { pair.value => pair.comment }
+      hash_value = with_comments ? { pair.value => pair.comment } : pair.value
         hash[pair.key] = hash_value
       }
     end
 
     def to_json(args={})
-      self.to_hash(no_comments: args[:no_comments]).to_json
+      self.to_hash(with_comments: args[:with_comments]).to_json
     end
 
     private

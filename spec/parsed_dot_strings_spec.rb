@@ -79,7 +79,7 @@ module Apfel
 
       context 'when :no_comments is passed as true' do
         it 'returns a hash of just keys and values' do
-          parsed_file.to_hash(no_comments: true).should eq(
+          parsed_file.to_hash(with_comments: false).should eq(
             {
               "key_number_one" => "value number one",
               "key_number_two" => "value number two",
@@ -102,7 +102,7 @@ module Apfel
       end
       context 'when :no_comments is passed as true' do
         it 'returns a valid json representation of just keys and values' do
-          parsed_file.to_json(no_comments: true).should eq(
+          parsed_file.to_json(with_comments: false).should eq(
             {
               "key_number_one" => "value number one",
               "key_number_two" => "value number two",

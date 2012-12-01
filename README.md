@@ -28,6 +28,10 @@ parsed_file.to_hash
 # Turn it into json
 parsed_file.to_json
 
+# With either #to_hash or #to_json you can specify whether you want the
+comments included
+parsed_file.to_hash()
+
 # Get all the keys as an array
 parsed_file.keys
 
