@@ -22,15 +22,15 @@ parsed_file = Apfel.parse('path/to/file')
 
 Once the file has been parsed, you can do many things with it:
 ```Ruby
-# Turn it into a ruby hash
+# Turn it into a ruby hash (includes comments)
 parsed_file.to_hash
 
-# Turn it into json
+# Turn it into json (includes comments)
 parsed_file.to_json
 
-# With either #to_hash or #to_json you can specify whether you want the
-comments included
-parsed_file.to_hash()
+# With either #to_hash or #to_json you can specify
+# whether you want the comments included
+parsed_file.to_hash(with_comments: false)
 
 # Get all the keys as an array
 parsed_file.keys
