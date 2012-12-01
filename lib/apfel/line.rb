@@ -4,6 +4,7 @@ module Apfel
 
     def initialize(line)
       @content = line
+      raise "Line does not end in ;" unless valid?
     end
 
     def empty_line?
@@ -40,6 +41,15 @@ module Apfel
 
     def cleaned_content
       content.gsub(/;\s*$/, "")
+    end
+
+    def valid?
+      if key_value_pair?
+        puts content
+        !!(/;[\s]*$/.match(content))
+      else
+        true
+      end
     end
 
     def key
