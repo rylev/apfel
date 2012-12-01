@@ -1,4 +1,5 @@
 # encoding: utf-8
+lib_folder = File.join(File.dirname(__FILE__), 'lib')
 apfel_folder = File.join(File.dirname(__FILE__), 'lib', 'apfel')
 $:.unshift apfel_folder
 require "version"

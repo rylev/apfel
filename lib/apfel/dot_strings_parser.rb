@@ -1,6 +1,6 @@
 module Apfel
-  require 'line'
-  require 'kv_pair'
+  require 'apfel/line'
+  require 'apfel/kv_pair'
   class DotStringsParser
     KEY = "KEY"
     COMMENT = "COMMENT"
