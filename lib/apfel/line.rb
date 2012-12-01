@@ -5,7 +5,7 @@ module Apfel
 
     def initialize(line)
       @content = line
-      @in_content = false
+      @in_comment = false
       raise "Line does not end in ;" unless valid?
     end
 

@@ -3,7 +3,7 @@ require 'reader'
 
 module Apfel
   describe Reader do
-    describe '.read' do
+    describe '#read' do
       let(:temp_file) do
         create_temp_file(<<-EOS
 This is a file with some lines.
