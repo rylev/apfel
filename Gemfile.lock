@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    Apfel (0.0.1)
+    apfel (0.0.2)
 
 GEM
   remote: https://rubygems.org/
@@ -28,7 +28,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  Apfel!
+  apfel!
   pry
   rake
   rspec
