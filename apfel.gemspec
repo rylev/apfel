@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Ryan Levick"]
   s.email       = ["ryan.levick@gmail.com"]
+  s.homepage    = "https://github.com/rlevick/apfel"
   s.summary     = %q{Simple parser for DotStrings Files}
   s.description = %q{Parse valid .strings files for easy conversion to other formats}
 

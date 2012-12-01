@@ -89,5 +89,28 @@ module Apfel
         end
       end
     end
+
+    describe 'to_json' do
+      it 'returns a valid json representation of .strings file' do
+        parsed_file.to_json.should eq(
+        {
+          "key_number_one" => { "value number one" => "This is the first comment" },
+          "key_number_two" => { "value number two" => "This is a multiline comment" },
+          "key_number_three" => { "value number three" => "This is comment number 3" }
+        }.to_json
+        )
+      end
+      context 'when :no_comments is passed as true' do
+        it 'returns a valid json representation of just keys and values' do
+          parsed_file.to_json(no_comments: true).should eq(
+            {
+              "key_number_one" => "value number one",
+              "key_number_two" => "value number two",
+              "key_number_three" => "value number three"
+            }.to_json
+          )
+        end
+      end
+    end
   end
 end

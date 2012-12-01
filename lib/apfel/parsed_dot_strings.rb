@@ -1,4 +1,5 @@
 module Apfel
+  require 'json'
   class ParsedDotStrings
     attr_accessor :kv_pairs
 
@@ -39,6 +40,10 @@ module Apfel
       hash_value = no_comments ? pair.value : { pair.value => pair.comment }
         hash[pair.key] = hash_value
       }
+    end
+
+    def to_json(args={})
+      self.to_hash(no_comments: args[:no_comments]).to_json
     end
 
     private
