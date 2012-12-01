@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'apfel'
+require 'parsed_dot_strings'
 
 module Apfel
   describe ParsedDotStrings do

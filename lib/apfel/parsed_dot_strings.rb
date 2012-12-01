@@ -25,17 +25,18 @@ module Apfel
     end
 
     def comments(args={})
-      with_keys = args[:with_keys] || true
+      with_keys = args[:with_keys].nil? ? true : args[:with_keys]
       cleaned_pairs = kv_pairs.map do |pair|
-        pair.comment.gsub!("\n"," ")
         pair
       end
       with_keys ? build_comment_hash(cleaned_pairs) : cleaned_pairs.map(&:comment)
     end
 
     def to_hash(args={})
+      no_comments = args[:no_comments].nil? ? false : args[:no_comments]
+
       build_hash { |hash, pair|
-      hash_value = args[:without_comments] ?   pair.value : { pair.value => pair.comment }
+      hash_value = no_comments ? pair.value : { pair.value => pair.comment }
         hash[pair.key] = hash_value
       }
     end

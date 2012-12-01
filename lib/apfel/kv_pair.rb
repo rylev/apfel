@@ -8,11 +8,11 @@ module Apfel
     end
 
     def key
-     line.key
+     line.key.strip
     end
 
     def value
-     line.value
+     line.value.strip
     end
 
     def comment
@@ -20,6 +20,8 @@ module Apfel
         @raw_comment = ""
       else
         raw_comment.gsub!(/(\/\*)|(\*\/)/,"")
+        raw_comment.gsub!("\n", " ")
+        raw_comment.gsub!(/\s+/, " ")
         raw_comment.strip
       end
     end

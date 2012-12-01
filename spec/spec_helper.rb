@@ -12,10 +12,11 @@ def valid_file
 
 /* This is
 a
+
 multiline comment */
 "key_number_two"   =   "value number two";
 /* This is comment number 3 */
-"key_number_three" = " value number three "
+"key_number_three" = " value number three ";
           EOS
   )
 end

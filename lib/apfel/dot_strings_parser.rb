@@ -16,7 +16,7 @@ module Apfel
       comments_for_keys = {}
       @read_file.each do |content_line|
         current_line = Line.new(content_line)
-        next if current_line.empty_line? && state != COMMENT
+        next if current_line.empty_line? && current_line.in_comment == false
 
         #State machine to parse the comments
         case state
@@ -37,7 +37,8 @@ module Apfel
             current_comment += current_line.close_comment
             state = KEY
           else
-            current_comment += current_line.content
+            current_line.in_comment = true
+            current_comment = current_comment + current_line.content + "\n"
           end
         end
 

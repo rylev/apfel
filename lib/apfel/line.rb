@@ -1,9 +1,11 @@
 module Apfel
   class Line
     attr_reader :content
+    attr_accessor :in_comment
 
     def initialize(line)
       @content = line
+      @in_content = false
       raise "Line does not end in ;" unless valid?
     end
 
@@ -45,7 +47,6 @@ module Apfel
 
     def valid?
       if key_value_pair?
-        puts content
         !!(/;[\s]*$/.match(content))
       else
         true
@@ -65,7 +66,7 @@ module Apfel
     end
 
     def is_comment?
-     whole_comment? || open_comment? || close_comment?
+     whole_comment? || open_comment? || close_comment? || in_comment
     end
   end
 end
