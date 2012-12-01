@@ -1,30 +1,16 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 module Apfel
-
-  module DotStrings
-    def self.parse(file)
-      file = read_file(file)
-      DotStringsParser.new(file).parse_file
-    end
-
-    def self.read_file(file)
-     Reader.read(file)
-    end
+require 'reader'
+  # Public module for parsing DotStrings files and returning a parsed dot
+  # strings object
+  def self.parse(file)
+    file = read(file)
+    DotStringsParser.new(file).parse_file
   end
 
-  class Reader
-    # Reads in a file and returns an array consisting of each line of input
-    def self.read(file)
-      File.open(file, "r") do |f|
-      content_array=[]
-      content = f.read
-        content.each_line do |line|
-          content_array.push(line)
-        end
-        content_array
-      end
-    end
+  def self.read(file)
+   Reader.read(file)
   end
 
   class ParsedDotStrings
@@ -32,6 +18,12 @@ module Apfel
 
     def initialize
       @kv_pairs = []
+    end
+
+    def key_values
+      kv_pairs.map do |pair|
+        {pair.key => pair.value}
+      end
     end
 
     def keys
@@ -46,19 +38,37 @@ module Apfel
       end
     end
 
-    def comments
-      kv_pairs.map do |pair|
-       pair.comment.gsub("\n"," ")
+    def comments(args={})
+      with_keys = args[:with_keys] || true
+      cleaned_pairs = kv_pairs.map do |pair|
+        pair.comment.gsub!("\n"," ")
+        pair
       end
+      with_keys ? build_comment_hash(cleaned_pairs) : cleaned_pairs.map(&:comment)
     end
 
-    def to_hash
-      hash = {}
-      kv_pairs.each do |pair|
-        hash[pair.key] = { pair.value => pair.comment }
-      end
-      hash
+    def to_hash(args={})
+      build_hash { |hash, pair|
+      hash_value = args[:without_comments] ?   pair.value : { pair.value => pair.comment }
+        hash[pair.key] = hash_value
+      }
     end
+
+    private
+
+      def build_comment_hash(kv_pairs)
+        build_hash { |hash, pair|
+          hash[pair.key] = pair.comment
+        }
+      end
+
+      def build_hash(&block)
+        hash = {}
+        kv_pairs.each do |pair|
+          yield hash, pair
+        end
+        hash
+      end
   end
 
   class DotStringsParser
@@ -107,7 +117,7 @@ module Apfel
       end
 
       raise "Invalid .string file: Unterminated comment" unless state == KEY
-      parsed_file
+      @parsed_file
     end
 
 
