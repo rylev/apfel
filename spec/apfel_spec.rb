@@ -10,7 +10,6 @@ describe Apfel do
         Apfel.parse(valid_file)
       end
 
-
       it 'returns a ParsedDotStrings object' do
         parsed_file.should be_a(Apfel::ParsedDotStrings)
       end
