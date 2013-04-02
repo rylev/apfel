@@ -2,7 +2,7 @@ require 'tempfile'
 require 'json'
 
 def create_temp_file(encoding, string)
-  temp_file = Tempfile.new('temp', encoding => encoding)
+  temp_file = Tempfile.new([encoding, 'temp'])
   temp_file << string
   temp_file.flush
 end

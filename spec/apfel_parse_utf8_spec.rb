@@ -4,10 +4,10 @@ require 'apfel/parsed_dot_strings'
 
 describe Apfel do
   describe '::parse_file' do
-    context 'when given an ASCII DotStrings file'do
+    context 'when given a UTF8 DotStrings file'do
 
       let(:parsed_file) do
-        Apfel.parse(valid_file)
+        Apfel.parse(valid_file 'utf-8')
       end
 
       it 'returns a ParsedDotStrings object' do
@@ -38,46 +38,6 @@ describe Apfel do
 
         it 'should have the correct comment for third' do
           parsed_file.comments(with_keys: false).should include 'This is comment number 3'
-        end
-      end
-    end
-
-    context 'when given an invalid strings file' do
-      context 'missing a semicolon' do
-
-        let(:invalid_file_semicolon) do
-          create_temp_file('ascii',  <<-EOS
-/* This is the first comment */
-"key_number_one" = "value number one"
-          EOS
-          )
-        end
-
-        it 'returns an error' do
-          expect {
-            Apfel.parse(invalid_file_semicolon)
-          }.to raise_error
-        end
-      end
-
-      context 'not closed comment' do
-        let(:invalid_file_comment) do
-          create_temp_file('ascii', <<-EOS
-/* This is the first comment
-"key_number_one" = "value number one";
-
-/* This is
-a
-multiline comment */
-        end
-          EOS
-          )
-        end
-
-        it 'raises an error' do
-          expect {
-            Apfel.parse(invalid_file_semicolon)
-          }.to raise_error
         end
       end
     end
