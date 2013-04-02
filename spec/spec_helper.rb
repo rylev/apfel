@@ -1,6 +1,8 @@
 require 'tempfile'
 require 'json'
 
+# added encoding to see if could could reproduce the missing
+# first comment in utf8 strings files
 def create_temp_file(encoding, string)
   temp_file = Tempfile.new([encoding, 'temp'])
   temp_file << string
