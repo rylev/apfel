@@ -7,9 +7,11 @@ describe Apfel do
     context 'when given a UTF8 DotStrings file'do
 
       it 'the file should be utf-8' do
-        res = `file  -I ./spec/utf8.strings`
-        encoding = res.split(/=/).last.gsub!("\n",'')
-        encoding.should == 'utf-8'
+        File.open('./spec/utf8.strings', 'r') do |f|
+          f.external_encoding.name.should == 'UTF-8'
+          content = f.read
+          content.encoding.name.should == 'UTF-8'
+        end
       end
 
       let(:parsed_file) do
