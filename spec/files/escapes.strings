@@ -1,0 +1,5 @@
+"multiline" = "line 1\nline 2";
+"mac" = "before cr\rafter cr";
+"tabs" = "two spaces \t equals tab";
+"dq" = "\"someone said this\"";
+"backslash" = "\\not a forward slash";
