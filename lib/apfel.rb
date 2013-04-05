@@ -7,10 +7,12 @@ require 'apfel/dot_strings_parser'
   # strings object
   def self.parse(file)
     file = read(file)
+    # confirmed that read does remove the first comment in utf
     DotStringsParser.new(file).parse_file
   end
 
   def self.read(file)
-   Reader.read(file)
+    # confirmed that read does remove the first comment in utf
+    Reader.read(file)
   end
 end

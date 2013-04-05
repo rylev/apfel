@@ -5,7 +5,7 @@ module Apfel
   describe Reader do
     describe '#read' do
       let(:temp_file) do
-        create_temp_file(<<-EOS
+        create_temp_file('ascii', <<-EOS
 This is a file with some lines.
 Roses are red, violets are blue.
 This text is really boring,

@@ -61,12 +61,47 @@ module Apfel
 
     def value
       if key_value_pair?
-        cleaned_content.partition(/"\s*=\s*"/)[2].gsub!(/(^"|"$)/, "")
+        unescape_value cleaned_content.partition(/"\s*=\s*"/)[2].gsub!(/(^"|"$)/, "")
       end
     end
 
     def is_comment?
      whole_comment? || open_comment? || close_comment? || in_comment
+    end
+
+    private
+
+    # http://developer.apple.com/library/mac/#documentation/cocoa/conceptual/LoadingResources/Strings/Strings.html
+    def unescape_value(string)
+      state = :normal
+      out = ''
+      string.each_char do |c|
+        case state
+        when :normal
+          if c == '\\'
+            state = :escape
+          else
+            out += c
+          end
+        when :escape
+          state = :normal
+          case c
+          when '\\'
+            out += '\\'
+          when '"'
+            out += '"'
+          when 'r'
+            out += "\r"
+          when 'n'
+            out += "\n"
+          when 't'
+            out += "\t"
+          else
+            out += '\\' + c # Do nothing, however in the future handling unicode escapes could be good
+          end
+        end
+      end
+      out
     end
   end
 end
