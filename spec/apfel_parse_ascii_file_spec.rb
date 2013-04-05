@@ -7,13 +7,13 @@ describe Apfel do
     context 'when given a ASCII DotStrings file'do
 
       it 'the file should be ascii' do
-        res = `file  -I ./spec/ascii.strings`
+        res = `file  -I ./spec/files/ascii.strings`
         encoding = res.split(/=/).last.gsub!("\n",'')
         encoding.should == 'us-ascii'
       end
 
       let(:parsed_file) do
-        Apfel.parse('./spec/ascii.strings')
+        Apfel.parse('./spec/files/ascii.strings')
       end
 
       it 'returns a ParsedDotStrings object' do

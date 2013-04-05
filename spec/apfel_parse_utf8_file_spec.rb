@@ -7,7 +7,7 @@ describe Apfel do
     context 'when given a UTF8 DotStrings file'do
 
       it 'the file should be utf-8' do
-        File.open('./spec/utf8.strings', 'r') do |f|
+        File.open('./spec/files/utf8.strings', 'r') do |f|
           f.external_encoding.name.should == 'UTF-8'
           content = f.read
           content.encoding.name.should == 'UTF-8'
@@ -15,7 +15,7 @@ describe Apfel do
       end
 
       let(:parsed_file) do
-        Apfel.parse('./spec/utf8.strings')
+        Apfel.parse('./spec/files/utf8.strings')
       end
 
       it 'returns a ParsedDotStrings object' do
