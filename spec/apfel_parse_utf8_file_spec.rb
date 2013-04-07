@@ -9,12 +9,12 @@ describe Apfel do
       it 'the file should be utf-8' do
         # use unix file instead of File.open because
         # File.open(file, 'r') <==> File.open(file, 'r:UTF-8')
-        file_info = `file  -I ./spec/utf8.strings`
+        file_info = `file  -I ./spec/fixtures/utf8.strings`
         file_info.should include('charset=utf-8')
       end
 
       let(:parsed_file) do
-        Apfel.parse('./spec/utf8.strings')
+        Apfel.parse('./spec/fixtures/utf8.strings')
       end
 
       it 'returns a ParsedDotStrings object' do

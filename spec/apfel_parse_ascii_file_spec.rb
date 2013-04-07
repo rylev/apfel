@@ -10,12 +10,12 @@ describe Apfel do
 
         # use unix file instead of File.open because
         # File.open(file, 'r') <==> File.open(file, 'r:UTF-8')
-        file_info = `file  -I ./spec/ascii.strings`
+        file_info = `file  -I ./spec/fixtures/ascii.strings`
         file_info.should include('charset=us-ascii')
       end
 
       let(:parsed_file) do
-        Apfel.parse('./spec/ascii.strings')
+        Apfel.parse('./spec/fixtures/ascii.strings')
       end
 
       it 'returns a ParsedDotStrings object' do
