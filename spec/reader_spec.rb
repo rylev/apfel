@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'reader'
+require 'apfel/reader'
 
 module Apfel
   describe Reader do

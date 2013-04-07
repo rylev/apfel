@@ -1,9 +1,6 @@
 require 'tempfile'
 require 'json'
 
-# added encoding to see if could could reproduce the missing  first comment in
-# utf8 strings files - did not reproduce the problem
-# SOLVED: it was the BOM at char 0 in the strings file
 def create_temp_file(encoding, string)
   temp_file = Tempfile.new([encoding, 'temp'])
   temp_file << string

@@ -7,11 +7,10 @@ describe Apfel do
     context 'when given a UTF8 DotStrings file'do
 
       it 'the file should be utf-8' do
-        File.open('./spec/utf8.strings', 'r') do |f|
-          f.external_encoding.name.should == 'UTF-8'
-          content = f.read
-          content.encoding.name.should == 'UTF-8'
-        end
+        # use unix file instead of File.open because
+        # File.open(file, 'r') <==> File.open(file, 'r:UTF-8')
+        file_info = `file  -I ./spec/utf8.strings`
+        file_info.should include('charset=utf-8')
       end
 
       let(:parsed_file) do
@@ -47,7 +46,6 @@ describe Apfel do
           parsed_file.comments['boredom'].should == 'No comment provided by engineer.'
         end
       end
-
     end
   end
 end

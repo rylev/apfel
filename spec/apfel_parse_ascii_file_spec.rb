@@ -7,9 +7,11 @@ describe Apfel do
     context 'when given a ASCII DotStrings file'do
 
       it 'the file should be ascii' do
-        res = `file  -I ./spec/ascii.strings`
-        encoding = res.split(/=/).last.gsub!("\n",'')
-        encoding.should == 'us-ascii'
+
+        # use unix file instead of File.open because
+        # File.open(file, 'r') <==> File.open(file, 'r:UTF-8')
+        file_info = `file  -I ./spec/ascii.strings`
+        file_info.should include('charset=us-ascii')
       end
 
       let(:parsed_file) do

@@ -6,12 +6,6 @@ rescue LoadError
 end
 Bundler::GemHelper.install_tasks
 
-# this was causing a world of hurt
-#require 'rspec/core/rake_task'
-#RSpec::Core::RakeTask.new do |t|
-#  t.rspec_opts = ["--color", '--order rand']
-#end
-
 desc "Run all tests and documentation checks"
 task :qa => [:spec]
 
