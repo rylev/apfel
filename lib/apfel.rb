@@ -11,6 +11,6 @@ require 'apfel/dot_strings_parser'
   end
 
   def self.read(file)
-   Reader.read(file)
+    Reader.read(file)
   end
 end
