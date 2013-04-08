@@ -6,10 +6,11 @@ module Apfel
     def self.read(file)
       File.open(file, 'r') do |f|
         content_array=[]
-        # http://stackoverflow.com/questions/5011504/is-there-a-way-to-remove-the-bom-from-a-utf-8-encoded-file
-        # problem is the BOM that can be found at char 0 in strings files
         content = f.read.force_encoding('UTF-8')
-        content.sub!("\xEF\xBB\xBF".force_encoding("UTF-8"), '')
+        # remove the BOM that can be found at char 0 in UTF8 strings files
+        if content.chars.first == "\xEF\xBB\xBF".force_encoding('UTF-8')
+          content.slice!(0)
+        end
         content.each_line do |line|
           line.gsub!("\n","")
           content_array.push(line)
